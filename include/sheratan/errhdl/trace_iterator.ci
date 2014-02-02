@@ -1,0 +1,94 @@
+/// \file sheratan/errhdl/trace_iterator.ci
+/// \brief Exception trace iterator implementation.
+/// \ingroup sheratan_errhdl
+/// \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+#include <cassert>
+
+
+namespace sheratan {
+
+namespace errhdl {
+
+
+template<bool IsConstant>
+trace_iterator_template<IsConstant>::trace_iterator_template()
+: exception_(NULL)
+{
+}
+
+template<bool IsConstant>
+trace_iterator_template<IsConstant>::trace_iterator_template(typename trace_iterator_template<IsConstant>::reference ex)
+: exception_(&ex)
+{
+}
+
+template<bool IsConstant>
+trace_iterator_template<IsConstant>::operator trace_iterator_template<true>() const
+{
+  return trace_iterator_template<true>(*this->exception_);
+}
+
+template<bool IsConstant>
+typename trace_iterator_template<IsConstant>::reference trace_iterator_template<IsConstant>::operator*() const
+{
+  assert(this->exception_ != NULL);
+
+  return *this->exception_;
+}
+
+template<bool IsConstant>
+typename trace_iterator_template<IsConstant>::pointer trace_iterator_template<IsConstant>::operator->() const
+{
+  assert(this->exception_ != NULL);
+
+  return &*(*this);
+}
+
+template<bool IsConstant>
+trace_iterator_template<IsConstant> & trace_iterator_template<IsConstant>::operator++()
+{
+  assert(this->exception_ != NULL);
+
+  if(const error_info::cause_type *cause = boost::get_error_info<error_info::cause>(*this->exception_)) {
+    this->exception_ = &**cause;
+  }
+  else {
+    this->exception_ = NULL;
+  }
+
+  return *this;
+}
+
+template<bool IsConstant>
+trace_iterator_template<IsConstant> trace_iterator_template<IsConstant>::operator++(int)
+{
+  assert(this->exception_ != NULL);
+
+  trace_iterator ret(*this);
+  ++(*this);
+  return ret;
+}
+
+template<bool IsLHSConstant, bool IsRHSConstant>
+bool operator==(const trace_iterator_template<IsLHSConstant> &lhs, const trace_iterator_template<IsRHSConstant> &rhs)
+{
+  return lhs.exception_ == rhs.exception_;
+}
+
+template<bool IsLHSConstant, bool IsRHSConstant>
+bool operator!=(const trace_iterator_template<IsLHSConstant> &lhs, const trace_iterator_template<IsRHSConstant> &rhs)
+{
+  return !(lhs == rhs);
+}
+
+
+} // namespace errhdl
+
+} // namespace sheratan
+
+
+// vim: set ts=2 sw=2 et:
+
+

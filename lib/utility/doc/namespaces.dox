@@ -1,0 +1,12 @@
+/// \namespace sheratan::utility
+/// \brief Utility library main namespace.
+/// \ingroup sheratan_utility
+
+/// \namespace sheratan::utility::test
+/// \brief Utility library unit-test namespace.
+/// \ingroup sheratan_utility_test
+
+
+// vim: set ts=2 sw=2 et:
+
+

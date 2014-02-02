@@ -1,0 +1,15 @@
+/// \defgroup sheratan Sheratan
+///
+/// Pikutorion: Sheratan project.
+
+/// \defgroup tools Tools
+///
+/// Auxiliary tools.
+
+/// \defgroup external_libs External libraries
+///
+/// STL and other external libraries used by Sheratan.
+
+// vim: set ts=2 sw=2 et:
+
+

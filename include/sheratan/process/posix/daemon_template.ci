@@ -1,0 +1,60 @@
+/// \file sheratan/process/posix/daemon_template.ci
+/// \brief POSIX daemon template implementation.
+/// \ingroup sheratan_process_posix
+/// \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+namespace sheratan {
+
+namespace process_impl {
+
+namespace posix {
+
+
+template<typename Tag>
+daemon_template<Tag>::daemon_template()
+: daemon()
+, daemonizer_()
+{
+}
+
+template<typename Tag>
+daemon_template<Tag>::daemon_template(
+  const daemon_ctl &dc,
+  const daemonizer::pid_file_type &pid_file,
+  const daemonizer::pid_file_mode_type &pid_file_mode,
+  const daemonizer::working_dir_type &working_dir,
+  const daemonizer::stdin_redirect_type &stdin_redirect,
+  const daemonizer::stdout_redirect_type &stdout_redirect,
+  const daemonizer::stderr_redirect_type &stderr_redirect,
+  const daemonizer::reset_signals_flag_type &reset_signals_flag
+)
+: daemon()
+, daemonizer_(dc, pid_file, pid_file_mode, working_dir, stdin_redirect, stdout_redirect, stderr_redirect, reset_signals_flag)
+{
+  this->daemonizer_.daemonize(*this);
+}
+
+template<typename Tag>
+const daemon_ctl & daemon_template<Tag>::get_daemon_ctl() const
+{
+  return this->daemonizer_.get_daemon_ctl();
+}
+
+template<typename Tag>
+daemon_ctl & daemon_template<Tag>::get_daemon_ctl()
+{
+  return this->daemonizer_.get_daemon_ctl();
+}
+
+
+} // namespace posix
+
+} // namespace process_impl
+
+} // namespace sheratan
+
+
+// vim: set ts=2 sw=2 et:
+
+

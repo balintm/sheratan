@@ -1,0 +1,51 @@
+/// \file sheratan/process/posix/process_template.ci
+/// \brief POSIX process template implementation.
+/// \ingroup sheratan_process_posix
+/// \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+namespace sheratan {
+
+namespace process_impl {
+
+namespace posix {
+
+
+template <typename Tag>
+process_template<Tag>::process_template()
+: process()
+, forker_()
+{
+}
+
+template <typename Tag>
+process_template<Tag>::process_template(const fork_ctl &fc)
+: process()
+, forker_(fc)
+{
+  this->forker_.fork(*this);
+}
+
+template <typename Tag>
+const fork_ctl & process_template<Tag>::get_fork_ctl() const
+{
+  return this->forker_.get_fork_ctl();
+}
+
+template <typename Tag>
+fork_ctl & process_template<Tag>::get_fork_ctl()
+{
+  return this->forker_.get_fork_ctl();
+}
+
+
+} // namespace posix
+
+} // namespace process_impl
+
+} // namespace sheratan
+
+
+// vim: set ts=2 sw=2 et:
+
+

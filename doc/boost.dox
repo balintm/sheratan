@@ -1,0 +1,56 @@
+/// \defgroup boost Boost
+/// \ingroup external_libs
+///
+/// Boost library.
+
+/// \namespace boost
+/// \brief Boost namespace.
+/// \ingroup boost
+
+/// \namespace boost::posix_time
+/// \brief Boost POSIX time namespace.
+/// \ingroup boost
+
+/// \namespace boost::system
+/// \brief Boost system namespace.
+/// \ingroup boost
+
+/// \class boost::array
+/// \brief Fixed-size sequence container, that holds a specific number of elements ordered in a strict linear sequence.
+/// \ingroup boost
+/// \nosubgrouping
+
+/// \class boost::system::error_code
+/// \brief Class that holds operating system or other low-lever error code values.
+/// \ingroup boost
+/// \nosubgrouping
+
+/// \class boost::error_info
+/// \brief Class template that associates a \c Tag type with a value type \c T, stored in \c boost::exception.
+/// \ingroup boost
+/// \nosubgrouping
+
+/// \class boost::exception
+/// \brief Universal base for user-defined exception types.
+/// \ingroup boost
+/// \nosubgrouping
+
+/// \class boost::noncopyable
+/// \brief Base class that can be used to prohibit copy construction and copy assignment.
+/// \ingroup boost
+/// \nosubgrouping
+
+/// \class boost::posix_time::ptime
+/// \brief Time type with no timezone or other adjustments.
+/// \ingroup boost
+/// \nosubgrouping
+
+/// \class boost::shared_ptr
+/// \brief Reference counted smart pointer.
+/// \ingroup boost
+/// \nosubgrouping
+
+
+// vim: set ts=2 sw=2 et:
+
+

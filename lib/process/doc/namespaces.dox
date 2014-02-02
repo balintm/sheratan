@@ -1,0 +1,16 @@
+/// \namespace sheratan::process
+/// \brief Process management library main namespace.
+/// \ingroup sheratan_process
+
+/// \namespace sheratan::process_impl
+/// \brief Process management library main implementaion namespace.
+/// \ingroup sheratan_process
+
+/// \namespace sheratan::process::test
+/// \brief Process management library unit-test namespace.
+/// \ingroup sheratan_process_test
+
+
+// vim: set ts=2 sw=2 et:
+
+

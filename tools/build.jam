@@ -1,0 +1,119 @@
+## \file tools/build.jam
+## \brief Project build tools.
+## \ingroup tools
+## \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+import modules ;
+import type ;
+import errors ;
+
+
+# register Doxygen documentation file type
+type.register DOXYFILE_DOC : dox ;
+
+# run checks to ensure invariants before building process starts
+rule prebuild-checks ( project-root )
+{
+  # project.config.jam
+  if ! [ GLOB $(project-root) : project-config.jam ] {
+    errors.user-error "Unable to find project configuration: Run 'bjam --configure' first. Run 'bjam --help' for more information." ;
+  }
+
+  # command line
+  local caller = [ CALLER_MODULE ] ;
+  check-command-line "target OS"         : "target-os"         : TARGET_OS        : $(caller) ;
+  check-command-line "target layout"     : "target-layout"     : TARGET_LAYOUT    : $(caller) ;
+
+  check-command-line "'dirname-usr'"     : "--dirname-usr"     : DIR_USR          : $(caller) ;
+  check-command-line "'dirname-local'"   : "--dirname-local"   : DIR_LOCAL        : $(caller) ;
+  check-command-line "'dirname-bin'"     : "--dirname-bin"     : DIR_BIN          : $(caller) ;
+  check-command-line "'dirname-sbin'"    : "--dirname-sbin"    : DIR_SBIN         : $(caller) ;
+  check-command-line "'dirname-lib'"     : "--dirname-lib"     : DIR_LIB          : $(caller) ;
+  check-command-line "'dirname-libexec'" : "--dirname-libexec" : DIR_LIBECEX      : $(caller) ;
+  check-command-line "'dirname-include'" : "--dirname-include" : DIR_INCLUDE      : $(caller) ;
+  check-command-line "'dirname-share'"   : "--dirname-share"   : DIR_SHARE        : $(caller) ;
+  check-command-line "'dirname-man'"     : "--dirname-man"     : DIR_MAN          : $(caller) ;
+  check-command-line "'dirname-info'"    : "--dirname-info"    : DIR_INFO         : $(caller) ;
+  check-command-line "'dirname-locale'"  : "--dirname-locale"  : DIR_LOCALE       : $(caller) ;
+  check-command-line "'dirname-etc'"     : "--dirname-etc"     : DIR_ETC          : $(caller) ;
+  check-command-line "'dirname-var'"     : "--dirname-var"     : DIR_VAR          : $(caller) ;
+  check-command-line "'dirname-run'"     : "--dirname-run"     : DIR_RUN          : $(caller) ;
+  check-command-line "'dirname-lock'"    : "--dirname-lock"    : DIR_LOCK         : $(caller) ;
+  check-command-line "'dirname-log'"     : "--dirname-log"     : DIR_LOG          : $(caller) ;
+
+  check-command-line "'prefix'"          : "--prefix"          : PATH_PREFIX      : $(caller) ;
+  check-command-line "'exec-prefix'"     : "--exec-prefix"     : PATH_EXEC_PREFIX : $(caller) ;
+  check-command-line "'bindir'"          : "--bindir"          : PATH_BIN         : $(caller) ;
+  check-command-line "'sbindir'"         : "--sbindir"         : PATH_SBIN        : $(caller) ;
+  check-command-line "'libdir'"          : "--libdir"          : PATH_LIB         : $(caller) ;
+  check-command-line "'libecexdir'"      : "--libecexdir"      : PATH_LIBEXEC     : $(caller) ;
+  check-command-line "'includedir'"      : "--includedir"      : PATH_INCLUDE     : $(caller) ;
+  check-command-line "'datadir'"         : "--datadir"         : PATH_DATA        : $(caller) ;
+  check-command-line "'mandir'"          : "--mandir"          : PATH_MAN         : $(caller) ;
+  check-command-line "'infodir'"         : "--infodir"         : PATH_INFO        : $(caller) ;
+  check-command-line "'localedir'"       : "--localedir"       : PATH_LOCALE      : $(caller) ;
+  check-command-line "'sysconfdir'"      : "--sysconfdir"      : PATH_SYSCONF     : $(caller) ;
+  check-command-line "'localstatedir'"   : "--localstatedir"   : PATH_LOCALSTATE  : $(caller) ;
+  check-command-line "'runtimedir'"      : "--runtimedir"      : PATH_RUNTIME     : $(caller) ;
+  check-command-line "'lockdir'"         : "--lockdir"         : PATH_LOCK        : $(caller) ;
+  check-command-line "'logdir'"          : "--logdir"          : PATH_LOG         : $(caller) ;
+}
+
+# collect all subprojects on specified path
+rule collect-subprojects ( path )
+{
+  # return value
+  local subprojects ;
+
+  # go through all subdirectories on specified path
+  for local dir in [ GLOB $(path) : * ] {
+    # get name of the subdirectory
+    local subproject = [ MATCH $(path)/(.*) : $(dir) ] ;
+    # check that Jamfile is present
+    if ! [ GLOB $(dir) : Jamfile ] {
+      errors.user-error "Jamfile missing at '$(dir)'." ;
+    }
+    # add to results
+    subprojects += $(subproject) ;
+  }
+
+  # return results
+  return $(subprojects) ;
+}
+
+# installation rule, which respects project configuration
+rule install ( rule-name : sources + : dirname : path : requirements * : default-build * : usage-requirements * )
+{
+  # get target OS
+  local target-os = [ feature.get-values <target-os> : $(properties) ] ;
+  local target-layout = [ feature.get-values <target-layout> : $(properties) ] ;
+
+  echo [ tools/prjconf.get-path "includedir" ] ;
+  local install_path = [ tools/prjconf.get-path $(dirname) ] ;
+  if ! $(install_path) {
+    exit "Invalid dirname: $(dirname)" ;
+  }
+  install_path += "/$(path)" ;
+  stage.install $(rule-name) : $(sources) : <location>$(install_path) $(requirements) : $(default-build) : $(usage-requirements) ;
+}
+
+# convinience rule for frequent error
+local rule check-command-line ( name : feature : constant : caller )
+{
+  # get feature value
+  local feature-value = [ MATCH "$(feature)\w*=\w*(.*)" : [ modules.peek : ARGV ] ] ;
+
+  # get current value
+  local current-value = [ modules.peek $(caller) : $(constant) ] ;
+
+  # both values must be the same
+  if $(feature-value) {
+    errors.user-error "Attempt to set $(name) to value '$(feature-value)'. This value has been already set during configuration step to '$(current-value)'. Run 'bjam --help' for more information." ;
+  }
+}
+
+
+# vim: set ts=2 sw=2 et:
+
+

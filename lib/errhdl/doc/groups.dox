@@ -1,0 +1,14 @@
+/// \defgroup sheratan_errhdl Error handling library
+/// \ingroup sheratan
+///
+/// Error handling library.
+
+/// \defgroup sheratan_errhdl_test Error handling library unit-tests.
+/// \ingroup sheratan_errhdl
+///
+/// Error handling library unit-tests.
+
+
+// vim: set ts=2 sw=2 et:
+
+

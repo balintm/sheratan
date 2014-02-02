@@ -1,0 +1,218 @@
+/// \defgroup posix POSIX
+/// \ingroup external_libs
+///
+/// POSIX Standard.
+
+/// \brief Change working directory.
+/// \param path
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>unistd.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/chdir.html
+/// \ingroup posix
+/// \nosubgrouping
+int chdir(const char *path);
+
+/// \brief Close a file descriptor.
+/// \param fildes
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>unistd.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/close.html
+/// \ingroup posix
+/// \nosubgrouping
+int close(int fildes);
+
+/// \brief Duplicate an open file descriptor.
+/// \param fildes
+/// \param fildes2
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>unistd.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/dup2.html
+/// \ingroup posix
+/// \nosubgrouping
+int dup2(int fildes, int fildes2);
+
+/// \brief File control.
+/// \param fildes
+/// \param cmd
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>fcntl.h</code>
+/// <code>unistd.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/fcntl.html
+/// \ingroup posix
+/// \nosubgrouping
+int fcntl(int fildes, int cmd, ...);
+
+/// \brief Associate a stream with a file descriptor.
+/// \param fildes
+/// \param mode
+/// \return <code>FILE*</code>
+/// \par Header file(s):
+/// <code>stdio.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/fdopen.html
+/// \ingroup posix
+/// \nosubgrouping
+FILE *fdopen(int fildes, const char *mode);
+
+/// \brief Map a stream pointer to a file descriptor.
+/// \param stream
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>stdio.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/fileno.html
+/// \ingroup posix
+/// \nosubgrouping
+int fileno(FILE *stream);
+
+/// \brief Crate a new process.
+/// \return <code>pid_t</code>
+/// \par Header file(s):
+/// <code>unistd.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/fork.html
+/// \ingroup posix
+/// \nosubgrouping
+pid_t fork(void);
+
+/// \brief truncate a file to a specified length.
+/// \param fildes
+/// \param length
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>unistd.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/ftruncate.html
+/// \ingroup posix
+/// \nosubgrouping
+int ftruncate(int fildes, off_t length);
+
+/// \brief Get the process ID.
+/// \return <code>pid_t</code>
+/// \par Header file(s):
+/// <code>unistd.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/getpid.html
+/// \ingroup posix
+/// \nosubgrouping
+pid_t getpid(void);
+
+/// \brief Get the parent process ID.
+/// \return <code>pid_t</code>
+/// \par Header file(s):
+/// <code>unistd.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/getppid.html
+/// \ingroup posix
+/// \nosubgrouping
+pid_t getppid(void);
+
+/// \brief Get maximum resource consumption.
+/// \param resource
+/// \param rlp
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>sys/resource.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/getrlimit.html
+/// \ingroup posix
+/// \nosubgrouping
+int getrlimit(int resource, struct rlimit *rlp);
+
+/// \brief Send a signal to a process or a group of processes.
+/// \param pid
+/// \param sig
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>signal.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/kill.html
+/// \ingroup posix
+/// \nosubgrouping
+int kill(pid_t pid, int sig);
+
+/// \brief Open a file.
+/// \param path
+/// \param oflag
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>fcntl.h</code>
+/// <code>sys/stat.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/open.html
+/// \ingroup posix
+/// \nosubgrouping
+int open(const char *path, int oflag, ... );
+
+/// \brief Create an interprocess channel.
+/// \param fildes
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>unistd.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/pipe.html
+/// \ingroup posix
+/// \nosubgrouping
+int pipe(int fildes[2]);
+
+/// \brief Create session and set process group ID.
+/// \return <code>pid_t</code>
+/// \par Header file(s):
+/// <code>unistd.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/setsid.html
+/// \ingroup posix
+/// \nosubgrouping
+pid_t setsid(void);
+
+/// \brief Examine and change a signal action.
+/// \param sig
+/// \param act
+/// \param oact
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>signal.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/sigaction.html
+/// \ingroup posix
+/// \nosubgrouping
+int sigaction(int sig, const struct sigaction *restrict act, struct sigaction *restrict oact);
+
+/// \brief Initialize and empty a signal set.
+/// \param set
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>signal.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/sigemptyset.html
+/// \ingroup posix
+/// \nosubgrouping
+int sigemptyset(sigset_t *set);
+
+/// \brief Suspend execution for an interval of time.
+/// \param seconds
+/// \return <code>unsigned</code>
+/// \par Header file(s):
+/// <code>unistd.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/sleep.html
+/// \ingroup posix
+/// \nosubgrouping
+unsigned sleep(unsigned seconds);
+
+/// \brief Set and get the file mode creation mask.
+/// \param cmask
+/// \return <code>mode_t</code>
+/// \par Header file(s):
+/// <code>sys/stat.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/umask.html
+/// \ingroup posix
+/// \nosubgrouping
+mode_t umask(mode_t cmask);
+
+/// \brief Wait for a child process to stop or terminate.
+/// \param pid
+/// \param stat_loc
+/// \param options
+/// \return <code>pid_t</code>
+/// \par Header file(s):
+/// <code>sys/wait.h</code>
+/// \see http://pubs.opengroup.org/onlinepubs/009695399/functions/waitpid.html
+/// \ingroup posix
+/// \nosubgrouping
+pid_t waitpid(pid_t pid, int *stat_loc, int options);
+
+
+// vim: set ts=2 sw=2 et:
+
+

@@ -1,0 +1,90 @@
+## \file tools/layouts/debian.jam
+## \brief Debian layout.
+## \ingroup tools
+## \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+import option ;
+import modules ;
+import path ;
+
+
+rule init-paths ( target )
+{
+  # get directory names
+  local dir-usr          = [ option.get "dirname-usr"     : "usr"                                             ] ;
+  local dir-local        = [ option.get "dirname-local"   : "local"                                           ] ;
+  local dir-bin          = [ option.get "dirname-bin"     : "bin"                                             ] ;
+  local dir-sbin         = [ option.get "dirname-sbin"    : "sbin"                                            ] ;
+  local dir-lib          = [ option.get "dirname-lib"     : "lib"                                             ] ;
+  local dir-libexec      = [ option.get "dirname-libexec" : "lib"                                             ] ;
+  local dir-include      = [ option.get "dirname-include" : "include"                                         ] ;
+  local dir-share        = [ option.get "dirname-share"   : "share"                                           ] ;
+  local dir-man          = [ option.get "dirname-man"     : "man"                                             ] ;
+  local dir-info         = [ option.get "dirname-info"    : "info"                                            ] ;
+  local dir-locale       = [ option.get "dirname-locale"  : "locale"                                          ] ;
+  local dir-etc          = [ option.get "dirname-etc"     : "etc"                                             ] ;
+  local dir-var          = [ option.get "dirname-var"     : "var"                                             ] ;
+  local dir-run          = [ option.get "dirname-run"     : "run"                                             ] ;
+  local dir-lock         = [ option.get "dirname-lock"    : "lock"                                            ] ;
+  local dir-log          = [ option.get "dirname-log"     : "log"                                             ] ;
+
+  # get paths
+  local path-prefix      = [ option.get "prefix"          : "/" ] ;
+  local path-exec-prefix = [ option.get "exec-prefix"     : "$(path-prefix)/$(dir-usr)/"                      ] ;
+  local path-bin         = [ option.get "bindir"          : "$(path-exec-prefix)/$(dir-bin)/"                 ] ;
+  local path-sbin        = [ option.get "sbindir"         : "$(path-exec-prefix)/$(dir-sbin)/"                ] ;
+  local path-lib         = [ option.get "libdir"          : "$(path-exec-prefix)/$(dir-lib)/"                 ] ;
+  local path-libexec     = [ option.get "libexecdir"      : "$(path-exec-prefix)/$(dir-libexec)/"             ] ;
+  local path-include     = [ option.get "includedir"      : "$(path-exec-prefix)/$(dir-include)/"             ] ;
+  local path-data        = [ option.get "datadir"         : "$(path-exec-prefix)/$(dir-share)/"               ] ;
+  local path-man         = [ option.get "mandir"          : "$(path-exec-prefix)/$(dir-share)/$(dir-man)/"    ] ;
+  local path-info        = [ option.get "infodir"         : "$(path-exec-prefix)/$(dir-share)/$(dir-info)/"   ] ;
+  local path-locale      = [ option.get "localedir"       : "$(path-exec-prefix)/$(dir-share)/$(dir-locale)/" ] ;
+  local path-sysconf     = [ option.get "sysconfdir"      : "$(path-prefix)/$(dir-etc)/"                      ] ;
+  local path-localstate  = [ option.get "localstatedir"   : "$(path-prefix)/$(dir-var)/"                      ] ;
+  local path-runtime     = [ option.get "runtimedir"      : "$(path-prefix)/$(dir-var)/$(dir-run)/"           ] ;
+  local path-lock        = [ option.get "lockdir"         : "$(path-prefix)/$(dir-var)/$(dir-lock)/"     ] ;
+  local path-log         = [ option.get "logdir"          : "$(path-prefix)/$(dir-var)/$(dir-log)/"           ] ;
+
+  # set directory names
+  DIR_USR          on $(target) = $(dir-usr)                        ;
+  DIR_LOCAL        on $(target) = $(dir-local)                      ;
+  DIR_BIN          on $(target) = $(dir-bin)                        ;
+  DIR_SBIN         on $(target) = $(dir-sbin)                       ;
+  DIR_LIB          on $(target) = $(dir-lib)                        ;
+  DIR_LIBEXEC      on $(target) = $(dir-libexec)                    ;
+  DIR_INCLUDE      on $(target) = $(dir-include)                    ;
+  DIR_SHARE        on $(target) = $(dir-share)                      ;
+  DIR_MAN          on $(target) = $(dir-man)                        ;
+  DIR_INFO         on $(target) = $(dir-info)                       ;
+  DIR_LOCALE       on $(target) = $(dir-locale)                     ;
+  DIR_ETC          on $(target) = $(dir-etc)                        ;
+  DIR_VAR          on $(target) = $(dir-var)                        ;
+  DIR_RUN          on $(target) = $(dir-run)                        ;
+  DIR_LOCK         on $(target) = $(dir-lock)                       ;
+  DIR_LOG          on $(target) = $(dir-log)                        ;
+
+  # set paths
+  PATH_PREFIX      on $(target) = [ path.make $(path-prefix)      ] ;
+  PATH_EXEC_PREFIX on $(target) = [ path.make $(path-exec-prefix) ] ;
+  PATH_BIN         on $(target) = [ path.make $(path-bin)         ] ;
+  PATH_SBIN        on $(target) = [ path.make $(path-sbin)        ] ;
+  PATH_LIB         on $(target) = [ path.make $(path-lib)         ] ;
+  PATH_LIBEXEC     on $(target) = [ path.make $(path-libexec)     ] ;
+  PATH_INCLUDE     on $(target) = [ path.make $(path-include)     ] ;
+  PATH_DATA        on $(target) = [ path.make $(path-data)        ] ;
+  PATH_MAN         on $(target) = [ path.make $(path-man)         ] ;
+  PATH_INFO        on $(target) = [ path.make $(path-info)        ] ;
+  PATH_LOCALE      on $(target) = [ path.make $(path-locale)      ] ;
+  PATH_SYSCONF     on $(target) = [ path.make $(path-sysconf)     ] ;
+  PATH_LOCALSTATE  on $(target) = [ path.make $(path-localstate)  ] ;
+  PATH_RUNTIME     on $(target) = [ path.make $(path-runtime)     ] ;
+  PATH_LOCK        on $(target) = [ path.make $(path-lock)        ] ;
+  PATH_LOG         on $(target) = [ path.make $(path-log)         ] ;
+}
+
+
+# vim: set ts=2 sw=2 et:
+
+

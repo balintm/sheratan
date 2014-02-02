@@ -1,0 +1,98 @@
+## \file meta/Jamfile
+## \brief Sheratan metaprogramming library project description file
+## \ingroup sheratan_meta
+## \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+##############################################################################
+#                                  PROJECT                                   #
+##############################################################################
+
+constant LIB_NAME        : meta                   ;
+constant LIB_VERSION     : $(PROJECT_VERSION)     ;
+constant LIB_VERSION_TAG : $(PROJECT_VERSION_TAG) ;
+
+project
+  : requirements
+      <define>$(DEFINE_PREFIX)LIB_NAME="\"\\\"$(PROJECT_LCNAME)_$(LIB_NAME)\\\"\""
+      <define>$(DEFINE_PREFIX)LIB_VERSION="\"\\\"$(LIB_VERSION)\\\"\""
+      <define>$(DEFINE_PREFIX)LIB_VERSION_TAG=$(LIB_VERSION_TAG)
+      <dependency>Jamfile
+  : default-build
+  : usage-requirements
+      <include>$(PROJECT_PATH_INCLUDE)
+;
+
+alias all
+  : #sources
+      $(PROJECT_LCNAME)_$(LIB_NAME).test
+  : #requirements
+  : #default-build
+  : #usage-requirements
+;
+
+
+##############################################################################
+#                                   BUILD                                    #
+##############################################################################
+
+# No build is needed for this subproject (header-only library).
+
+
+##############################################################################
+#                                    TEST                                    #
+##############################################################################
+
+explicit $(PROJECT_LCNAME)_$(LIB_NAME).test ;
+
+alias $(PROJECT_LCNAME)_$(LIB_NAME).test
+  : #sources
+      [ run
+        # sources
+            [ glob $(PROJECT_DIR_TEST)/*.cpp ]
+        : #args
+            $(TEST_ARGS)
+        : #input-files
+        : #requirements
+            $(TEST_REQUIREMENTS)
+        : #target-name
+            $(PROJECT_LCNAME)_$(LIB_NAME)
+        : #default-build
+      ]
+  : #requirements
+  : #default-build
+  : #usage-requirements
+;
+
+
+##############################################################################
+#                                  INSTALL                                   #
+##############################################################################
+
+explicit install install.include ;
+
+alias install : install.include ;
+
+install install.include
+  : #sources
+      [ glob $(PROJECT_PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)/*.hpp ]
+      [ glob $(PROJECT_PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)/*.ci ]
+  : #requirements
+      <location>$(PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)
+;
+
+explicit stage stage.include ;
+
+alias stage : stage.include ;
+
+install stage.include
+  : #sources
+      [ glob $(PROJECT_PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)/*.hpp ]
+      [ glob $(PROJECT_PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)/*.ci ]
+  : #requirements
+      <location>$(PROJECT_PATH_STAGE)/$(PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)
+;
+
+# vim: set ts=2 sw=2 et:
+
+

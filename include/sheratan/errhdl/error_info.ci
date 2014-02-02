@@ -1,0 +1,29 @@
+/// \file sheratan/errhdl/error_info.ci
+/// \brief Exception information implementation.
+/// \ingroup sheratan_errhdl
+/// \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+#include <boost/exception/get_error_info.hpp>
+
+
+namespace sheratan {
+
+namespace errhdl {
+
+
+template <typename ErrorInfo>
+const typename ErrorInfo::value_type * get_error_info(const exception &ex)
+{
+  return boost::get_error_info<ErrorInfo>(ex);
+}
+
+
+} // namespace errhdl
+
+} // namespace sheratan
+
+
+// vim: set ts=2 sw=2 et:
+
+

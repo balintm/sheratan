@@ -1,0 +1,188 @@
+/// \file sheratan/utility/id.ci
+/// \brief ID implementation.
+/// \ingroup sheratan_utility
+/// \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+namespace sheratan {
+
+namespace utility {
+
+
+template<typename Tag>
+id_impl_base<Tag>::~id_impl_base()
+{
+}
+
+template<typename Tag>
+bool operator==(const id_impl_base<Tag> &lhs, const id_impl_base<Tag> &rhs)
+{
+  return !lhs.less(rhs) && !rhs.less(lhs);
+}
+
+template<typename Tag>
+bool operator!=(const id_impl_base<Tag> &lhs, const id_impl_base<Tag> &rhs)
+{
+  return !(lhs == rhs);
+}
+
+template<typename Tag>
+bool operator<(const id_impl_base<Tag> &lhs, const id_impl_base<Tag> &rhs)
+{
+  return lhs.less(rhs);
+}
+
+template<typename Tag>
+bool operator<=(const id_impl_base<Tag> &lhs, const id_impl_base<Tag> &rhs)
+{
+  return !rhs.less(lhs);
+}
+
+template<typename Tag>
+bool operator>(const id_impl_base<Tag> &lhs, const id_impl_base<Tag> &rhs)
+{
+  return rhs.less(lhs);
+}
+
+template<typename Tag>
+bool operator>=(const id_impl_base<Tag> &lhs, const id_impl_base<Tag> &rhs)
+{
+  return !lhs.less(rhs);
+}
+
+
+template<typename ValueTraits, typename ValueTraits::tag::value_type Tag>
+id_impl<ValueTraits, Tag>::id_impl()
+: value_(ValueTraits::default_value())
+{
+}
+
+template<typename ValueTraits, typename ValueTraits::tag::value_type Tag>
+id_impl<ValueTraits, Tag>::id_impl(const id_impl<ValueTraits, Tag>::value_type &value)
+: value_(value)
+{
+}
+
+template<typename ValueTraits, typename ValueTraits::tag::value_type Tag>
+bool id_impl<ValueTraits, Tag>::less(const id_impl_base<typename ValueTraits::base_tag> &rhs) const
+{
+  const id_impl<ValueTraits, Tag> *rhs_ptr = dynamic_cast<const id_impl<ValueTraits, Tag> *>(&rhs);
+  if(!rhs_ptr) {
+    return false;
+  }
+
+  return this->less(*rhs_ptr);
+}
+
+template<typename ValueTraits, typename ValueTraits::tag::value_type Tag>
+std::ostream & id_impl<ValueTraits, Tag>::output(std::ostream &os) const
+{
+  return ValueTraits::output(os, this->get_value());
+}
+
+template<typename ValueTraits, typename ValueTraits::tag::value_type Tag>
+id_impl_base<typename ValueTraits::base_tag> * id_impl<ValueTraits, Tag>::clone() const
+{
+  return ValueTraits::clone(*this);
+}
+
+template<typename ValueTraits, typename ValueTraits::tag::value_type Tag>
+typename id_impl_base<typename ValueTraits::base_tag>::destroy_function id_impl<ValueTraits, Tag>::get_destroy_function() const
+{
+  return ValueTraits::destroy;
+}
+
+template<typename ValueTraits, typename ValueTraits::tag::value_type Tag>
+bool id_impl<ValueTraits, Tag>::less(const id_impl &rhs) const
+{
+  return ValueTraits::less(this->value_, rhs.value_);
+}
+
+template<typename ValueTraits, typename ValueTraits::tag::value_type Tag>
+typename id_impl<ValueTraits, Tag>::value_type id_impl<ValueTraits, Tag>::get_value() const
+{
+  return this->value_;
+}
+
+template<typename ValueTraits, typename ValueTraits::tag::value_type Tag>
+void id_impl<ValueTraits, Tag>::set_value(const id_impl<ValueTraits, Tag>::value_type &value)
+{
+  this->value_ = value;
+}
+
+
+template<typename Tag, template <typename> class SmartPtrT>
+id<Tag, SmartPtrT>::id(const id<Tag, SmartPtrT>::value_type &value)
+: value_(value.clone(), value.get_destroy_function())
+{
+}
+
+template<typename Tag, template <typename> class SmartPtrT>
+bool id<Tag, SmartPtrT>::less(const id<Tag, SmartPtrT> &rhs) const
+{
+  return this->value_->less(*rhs.value_);
+}
+
+template<typename Tag, template <typename> class SmartPtrT>
+typename id<Tag, SmartPtrT>::value_type & id<Tag, SmartPtrT>::get_value()
+{
+  return *this->value_;
+}
+
+template<typename Tag, template <typename> class SmartPtrT>
+const typename id<Tag, SmartPtrT>::value_type & id<Tag, SmartPtrT>::get_value() const
+{
+  return *this->value_;
+}
+
+template<typename Tag, template <typename> class SmartPtrT>
+void id<Tag, SmartPtrT>::set_value(const id<Tag, SmartPtrT>::value_type &value)
+{
+  this->value_ = SmartPtrT<typename id<Tag, SmartPtrT>::value_type>(value.clone(), value.get_destroy_function());
+}
+
+template<typename Tag, template <typename> class SmartPtrT>
+bool operator==(const id<Tag, SmartPtrT> &lhs, const id<Tag, SmartPtrT> &rhs)
+{
+  return !lhs.less(rhs) && !rhs.less(lhs);
+}
+
+template<typename Tag, template <typename> class SmartPtrT>
+bool operator!=(const id<Tag, SmartPtrT> &lhs, const id<Tag, SmartPtrT> &rhs)
+{
+  return !(lhs == rhs);
+}
+
+template<typename Tag, template <typename> class SmartPtrT>
+bool operator<(const id<Tag, SmartPtrT> &lhs, const id<Tag, SmartPtrT> &rhs)
+{
+  return lhs.less(rhs);
+}
+
+template<typename Tag, template <typename> class SmartPtrT>
+bool operator<=(const id<Tag, SmartPtrT> &lhs, const id<Tag, SmartPtrT> &rhs)
+{
+  return !rhs.less(lhs);
+}
+
+template<typename Tag, template <typename> class SmartPtrT>
+bool operator>(const id<Tag, SmartPtrT> &lhs, const id<Tag, SmartPtrT> &rhs)
+{
+  return rhs.less(lhs);
+}
+
+template<typename Tag, template <typename> class SmartPtrT>
+bool operator>=(const id<Tag, SmartPtrT> &lhs, const id<Tag, SmartPtrT> &rhs)
+{
+  return !lhs.less(rhs);
+}
+
+
+} // namespace utility
+
+} // namespace sheratan
+
+
+// vim: set ts=2 sw=2 et:
+
+

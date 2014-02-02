@@ -1,0 +1,14 @@
+/// \defgroup sheratan_process Process management library
+/// \ingroup sheratan
+///
+/// Process management library.
+
+/// \defgroup sheratan_process_test Process management library unit-tests.
+/// \ingroup sheratan_process
+///
+/// Process management library unit-tests.
+
+
+// vim: set ts=2 sw=2 et:
+
+

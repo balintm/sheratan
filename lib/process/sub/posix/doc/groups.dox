@@ -1,0 +1,13 @@
+/// \defgroup sheratan_process_posix Process management library POSIX implementation
+/// \ingroup sheratan_process
+///
+/// Process management library, POSIX implementation.
+
+/// \defgroup sheratan_process_posix_test Process management library POSIX implementation unit-tests.
+/// \ingroup sheratan_process_posix
+///
+/// Process management library POSIX implementation unit-tests.
+
+// vim: set ts=2 sw=2 et:
+
+

@@ -1,0 +1,12 @@
+/// \namespace sheratan::process_impl::posix
+/// \brief Process management library POSIX implementation main namespace.
+/// \ingroup sheratan_process_posix
+
+/// \namespace sheratan::process_impl::posix::test
+/// \brief Process management library POSIX implementation unit-test namespace.
+/// \ingroup sheratan_process_posix_test
+
+
+// vim: set ts=2 sw=2 et:
+
+

@@ -1,0 +1,14 @@
+/// \defgroup sheratan_utility Utility library
+/// \ingroup sheratan
+///
+/// Utility library.
+
+/// \defgroup sheratan_utility_test Utility library unit-tests.
+/// \ingroup sheratan_utility
+///
+/// Utility library unit-tests.
+
+
+// vim: set ts=2 sw=2 et:
+
+

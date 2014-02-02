@@ -1,0 +1,12 @@
+/// \namespace sheratan::errhdl
+/// \brief Error handling library main namespace.
+/// \ingroup sheratan_errhdl
+
+/// \namespace sheratan::errhdl::test
+/// \brief Error handling library unit-test namespace.
+/// \ingroup sheratan_errhdl_test
+
+
+// vim: set ts=2 sw=2 et:
+
+

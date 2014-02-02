@@ -1,0 +1,57 @@
+## \file tools/version.jam
+## \brief Build system generated targets versioning.
+## \ingroup tools
+## \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+import type ;
+import feature ;
+import tools/util ;
+
+
+# declare new free feature <prefix>
+feature.feature version-tag : : free ;
+
+# tag rule augmenting name of generated target with value of <version-tag> feature
+rule version-tag ( name : type ? : property-set )
+{
+  # get value of <version-tag> feature for given target
+  local version-tag = [ $(property-set).get <version-tag> ] ;
+
+  # augment generated target name only if <version-tag> feature was set
+  if $(version-tag) {
+    # get environment dependent prefix and suffix (given by Boost.Build)
+    #   # type.generated-target-ps-real is local to type.jam
+    #   local prefix = [ tools/util.nvl [ type.generated-target-ps-real "prefix" : $(type) : $(property-set) ] : "" ] ;
+    #   local suffix = [ tools/util.nvl [ type.generated-target-ps-real "suffix" : $(type) : $(property-set) ] : "" ] ;
+    local prefix = [ tools/util.nvl [ type.generated-target-prefix $(type) : $(property-set) ] : "" ] ;
+    local suffix = [ tools/util.nvl [ type.generated-target-suffix $(type) : $(property-set) ] : "" ] ;
+    if $(suffix) {
+      suffix = ".$(suffix)" ;
+    }
+
+    # return value
+    local retval ;
+
+    # executables: [{prefix}]{name}_{version-tag}[.{suffix}]
+    if $(type) = "EXE" {
+      retval = "$(prefix)$(name)_$(version-tag)$(suffix)" ;
+    }
+    # static libraries: [{prefix}]{name}_{version-tag}[.{suffix}]
+    if $(type) = "STATIC_LIB" {
+      retval = "$(prefix)$(name)_$(version-tag)$(suffix)" ;
+    }
+    # shared libraries: [{prefix}]{name}[.{suffix}].{version-tag}
+    if $(type) = "SHARED_LIB" {
+      retval = "$(prefix)$(name)$(suffix).$(version-tag)" ;
+    }
+
+    # return results
+    return $(retval) ;
+  }
+}
+
+
+# vim: set ts=2 sw=2 et:
+
+

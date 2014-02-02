@@ -1,0 +1,530 @@
+## \file Jamroot
+## \brief Main project description file
+## \ingroup sheratan
+## \author Marek Balint \c (mareq[A]balint[D]eu)
+#
+## This comment block must contain word 'copyright' in order to be skipped
+## by bjam --help command.
+
+# CONFIGURE
+#
+# It is necessary to complete configuration step before proceeding with
+# build. Project configuration file 'project-config.jam' is generated
+# during this step.
+#
+# This step is synonym for './configure' step of GNU Autotools.
+#
+#
+# Usage:
+#
+#   bjam --configure [properties] [options]
+#
+#
+# Properties:
+#
+#   target-os=<target-os>
+#                           The operating system for which the code is
+#                           to be generated.
+#
+#                           See Boost.Build documentation for full list
+#                           of available values.
+#
+#
+#   target-layout=<target-layout>
+#
+#                           Directory layout to be used. This applies
+#                           to paths, where project files will get installed,
+#                           as well as paths used by code itself in order
+#                           to find needed data.
+#
+#                           Values currently available are: gnu, debian.
+#
+#
+# Options:
+#
+#   --dirname-<dir>=<dir-name>
+#
+#                           Name of <dir> directory to be used. Default
+#                           value of <dir-name> is <dir>.
+#
+#                           <dir> can be one of: usr, local, bin, sbin, lib,
+#                           libexec, include, share, man, info, locale, etc,
+#                           var, run, lock, log.
+#
+#
+#   --prefix=<path>
+#
+#                           A prefix used in constructing paths. Generally,
+#                           prefix is used for construction of paths for
+#                           machine independent targets, but it is in sole
+#                           competence of target layout.
+#
+#
+#   --exec-prefix=<path>
+#
+#                           A prefix used in constructing paths. Generally,
+#                           exec-prefix is used for construction of paths
+#                           for machine dependent targets, but it is in sole
+#                           competence of target layout.
+#
+#
+#   --bindir=<path>
+#
+#                           The directory containing executable programs
+#                           that users can run.
+#
+#
+#   --sbindir=<path>
+#
+#                           The directory containing executable programs
+#                           that can be run from the shell, but are only
+#                           generally useful to system administrators.
+#
+#
+#   --libdir=<path>
+#
+#                           The directory containing object files and
+#                           libraries of object code.
+#
+#
+#   --libexecdir=<path>
+#
+#                           The directory containing executable programs
+#                           to be run by other programs rather than by users.
+#
+#
+#   --includedir=<path>
+#
+#                           The directory containing header files to be
+#                           included by user programs with the C #include
+#                           preprocessor directive.
+#
+#
+#   --datadir=<path>
+#
+#                           The directory containing read-only architecture
+#                           independent data files.
+#
+#
+#   --mandir=<path>
+#
+#                           The directory containing the man pages.
+#
+#
+#   --infodir=<path>
+#
+#                           The directory containing the info files.
+#
+#
+#   --localedir=<path>
+#
+#                           The directory containing locale specific message
+#                           catalogs.
+#
+#
+#   --sysconfdir=<path>
+#
+#                           The directory containing read-only data files
+#                           that pertain to a single machine. That is, files
+#                           for configuring a host.
+#
+#
+#   --localstatedir=<path>
+#
+#                           The directory containing modifiable data files,
+#                           accessed by programs and belonging to single host.
+#
+#
+#   --runtimedir=<path>
+#
+#                           Directory containing information about running system.
+#
+#
+#   --lockdir=<path>
+#
+#                           Directory containing files keeping track of resources
+#                           currently in use.
+#
+#
+#   --logdir=<path>
+#
+#                           The directory containing automatically generatied
+#                           logs.
+#
+#
+# BUILD
+#
+# This step is responsible for actual building process. Final executables
+# and other needed files are generated and installed in this step.
+#
+# This step is synonym for 'make' and 'make install' steps of GNU Autotools.
+#
+#
+# Usage:
+#
+#  bjam [options] [properties] [install|stage]
+#
+#
+# Properties:
+#
+#                           See Boost.Build documentation.
+#
+# Options:
+#
+#   --builddir=<path>       Directory to be used by build system for storage
+#                           of intermediate build results.
+#
+#                           Default value is: <project-root>/build/
+#
+#
+#   --stagedir=<path>       Directory to be used as filesystem fake root
+#                           for staging.
+#
+#                           Default value is: <project-root>/stage/
+#
+#
+# Targets:
+#
+#   install
+#
+#                           Will install project targets into directories
+#                           specified in configuration step.
+#
+#
+#   stage
+#
+#                           Will stage project targets into directories
+#                           specified in configuration step. Directory
+#                           specified by '--stagedir' option will be used
+#                           as staging are root directory.
+
+
+import option ;
+import tools/configure ;
+import tools/build ;
+
+
+##############################################################################
+##############################################################################
+####                                                                      ####
+####                             PROJECT INFO                             ####
+####                                                                      ####
+##############################################################################
+##############################################################################
+
+constant PROJECT_UCNAME      : Sheratan    ;
+constant PROJECT_LCNAME      : sheratan    ;
+constant PROJECT_VERSION     : 0.0.1       ;
+constant PROJECT_VERSION_TAG : 1           ;
+
+constant DEFINE_PREFIX       : "SHERATAN_" ;
+
+
+##############################################################################
+##############################################################################
+####                                                                      ####
+####                            PROJECT LAYOUT                            ####
+####                                                                      ####
+##############################################################################
+##############################################################################
+
+constant      PROJECT_DIR_SRC      : "src"                           ;
+constant      PROJECT_DIR_TEST     : "test"                          ;
+constant      PROJECT_DIR_SUB      : "sub"                           ;
+
+path-constant PROJECT_PATH_ROOT    : "./"                            ;
+path-constant PROJECT_PATH_APP     : "$(PROJECT_PATH_ROOT)/app/"     ;
+path-constant PROJECT_PATH_INCLUDE : "$(PROJECT_PATH_ROOT)/include/" ;
+path-constant PROJECT_PATH_LIB     : "$(PROJECT_PATH_ROOT)/lib/"     ;
+path-constant PROJECT_PATH_DOC     : "$(PROJECT_PATH_ROOT)/doc/"     ;
+path-constant PROJECT_PATH_TOOLS   : "$(PROJECT_PATH_ROOT)/tools/"   ;
+
+path-constant PROJECT_PATH_BUILD   : [ option.get "builddir" : "$(PROJECT_PATH_ROOT)/build/" ] ;
+path-constant PROJECT_PATH_STAGE   : [ option.get "stagedir" : "$(PROJECT_PATH_ROOT)/stage/" ] ;
+
+
+##############################################################################
+##############################################################################
+####                                                                      ####
+####                              CONFIGURE                               ####
+####                                                                      ####
+##############################################################################
+##############################################################################
+
+rule configure ( )
+{
+  ECHO "...configuring project $(PROJECT_LCNAME)..." ;
+
+  project /root
+    : build-dir
+        $(PROJECT_PATH_BUILD)
+  ;
+
+  tools/configure.project-config $(PROJECT_PATH_ROOT) ;
+}
+
+
+##############################################################################
+##############################################################################
+####                                                                      ####
+####                                BUILD                                 ####
+####                                                                      ####
+##############################################################################
+##############################################################################
+
+rule build ( )
+{
+  tools/build.prebuild-checks $(PROJECT_PATH_ROOT) ;
+
+  ECHO "...building project $(PROJECT_LCNAME)..." ;
+
+
+##############################################################################
+#                                  PROJECT                                   #
+##############################################################################
+
+  local JAMTOOLS = [ glob $(PROJECT_PATH_TOOLS)/*.jam ] ;
+
+  project /root
+    : build-dir
+        $(PROJECT_PATH_BUILD)
+    : requirements
+        <include>$(PROJECT_PATH_INCLUDE)
+        <include>$(PROJECT_PATH_TOOLS)
+        <define>$(DEFINE_PREFIX)TARGET_OS_$(TARGET_OS:U)
+        <define>$(DEFINE_PREFIX)TARGET_LAYOUT_$(TARGET_LAYOUT:U)
+        <define>$(DEFINE_PREFIX)DIR_USR="\"\\\"$(DIR_USR)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_LOCAL="\"\\\"$(DIR_LOCAL)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_BIN="\"\\\"$(DIR_BIN)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_SBIN="\"\\\"$(DIR_SBIN)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_LIB="\"\\\"$(DIR_LIB)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_LIBEXEC="\"\\\"$(DIR_LIBEXEC)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_INCLUDE="\"\\\"$(DIR_INCLUDE)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_SHARE="\"\\\"$(DIR_SHARE)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_MAN="\"\\\"$(DIR_MAN)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_INFO="\"\\\"$(DIR_INFO)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_LOCALE="\"\\\"$(DIR_LOCALE)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_ETC="\"\\\"$(DIR_ETC)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_VAR="\"\\\"$(DIR_VAR)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_RUN="\"\\\"$(DIR_RUN)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_LOCK="\"\\\"$(DIR_LOCK)\\\"\""
+        <define>$(DEFINE_PREFIX)DIR_LOG="\"\\\"$(DIR_LOG)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_PREFIX="\"\\\"$(PATH_PREFIX)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_EXEC_PREFIX="\"\\\"$(PATH_EXEC_PREFIX)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_BIN="\"\\\"$(PATH_BIN)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_SBIN="\"\\\"$(PATH_SBIN)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_LIB="\"\\\"$(PATH_LIB)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_LIBEXEC="\"\\\"$(PATH_LIBEXEC)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_INCLUDE="\"\\\"$(PATH_INCLUDE)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_DATA="\"\\\"$(PATH_DATA)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_MAN="\"\\\"$(PATH_MAN)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_INFO="\"\\\"$(PATH_INFO)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_LOCALE="\"\\\"$(PATH_LOCALE)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_SYSCONF="\"\\\"$(PATH_SYSCONF)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_LOCALSTATE="\"\\\"$(PATH_LOCALSTATE)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_RUNTIME="\"\\\"$(PATH_RUNTIME)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_LOCK="\"\\\"$(PATH_LOCK)\\\"\""
+        <define>$(DEFINE_PREFIX)PATH_LOG="\"\\\"$(PATH_LOG)\\\"\""
+        <warnings>all
+        <warnings-as-errors>on
+        <dependency>$(PROJECT_PATH_ROOT)/project-config.jam
+        <dependency>$(PROJECT_PATH_ROOT)/Jamroot
+        <dependency>$(JAMTOOLS)
+    : default-build
+        debug
+    : usage-requirements
+  ;
+
+  use-project /lib/errhdl  : $(PROJECT_PATH_LIB)/errhdl  ;
+  use-project /lib/meta    : $(PROJECT_PATH_LIB)/meta    ;
+  use-project /lib/process : $(PROJECT_PATH_LIB)/process ;
+  use-project /lib/utility : $(PROJECT_PATH_LIB)/utility ;
+
+  constant LIB_TARGETS :
+    /lib/errhdl//all
+    /lib/meta//all
+    /lib/process//all
+    /lib/utility//all
+  ;
+
+
+##############################################################################
+#                                   BUILD                                    #
+##############################################################################
+
+  explicit all.shared all.static ;
+
+  alias all : all.shared all.static ;
+
+  alias all.shared
+    : #sources
+        $(LIB_TARGETS)
+    : #requirements
+        <link>shared
+    : #default-build
+    : #usage-requirements
+  ;
+
+  alias all.static
+    : #sources
+        $(LIB_TARGETS)
+    : #requirements
+        <link>static
+    : #default-build
+    : #usage-requirements
+  ;
+
+  lib boost_locale.lib
+    : #sources
+    : #requirements
+        <name>boost_locale
+    : #default-build
+    : #usage-requirements
+  ;
+
+  lib boost_program_options.lib
+    : #sources
+    : #requirements
+        <name>boost_program_options
+    : #default-build
+    : #usage-requirements
+  ;
+
+  lib boost_system.lib
+    : #sources
+    : #requirements
+        <name>boost_system
+    : #default-build
+    : #usage-requirements
+  ;
+
+  lib boost_random.lib
+    : #sources
+    : #requirements
+        <name>boost_random
+    : #default-build
+    : #usage-requirements
+  ;
+
+  lib ltdl.lib
+    : #sources
+    : #requirements
+        <name>ltdl
+    : #default-build
+    : #usage-requirements
+  ;
+
+
+##############################################################################
+#                                    TEST                                    #
+##############################################################################
+
+  import testing ;
+
+  constant TEST_ARGS :
+    --auto_start_dbg=no
+    --build_info=yes
+    --catch_system_errors=yes
+    --detect_memory_leak=1
+    --detect_fp_exceptions=no
+    --log_format=HRF
+    --log_level=message
+    --random=0
+    --report_format=HRF
+    --report_level=detailed
+    --result_code=yes
+    --show_progress=no
+    --use_alt_stact=yes
+  ;
+
+  constant TEST_REQUIREMENTS :
+    #<define>$(DEFINE_PREFIX)TEST_LINK_NO
+    #<library>/root//test.lib/<link>static
+    <library>/root//test.lib/<link>shared
+  ;
+
+  lib test.lib
+    : #sources
+    : #requirements
+        <name>boost_unit_test_framework
+    : #default-build
+    : #usage-requirements
+        <link>static:<define>$(DEFINE_PREFIX)TEST_LINK_STATIC
+        <link>shared:<define>$(DEFINE_PREFIX)TEST_LINK_DYNAMIC
+  ;
+
+##############################################################################
+#                               DOCUMENTATION                                #
+##############################################################################
+
+  import notfile ;
+
+  explicit doc ;
+
+  notfile doc : @doxygen ;
+  notfile doc : @doxygen-windows : : <host-os>windows ;
+
+  actions doxygen
+  {
+    ( cat Doxyfile ; echo "PROJECT_NAME=$(PROJECT_UCNAME)" ; echo "PROJECT_NUMBER=$(PROJECT_VERSION)" ; echo "OUTPUT_DIRECTORY=$(PROJECT_PATH_BUILD)/doc" ; ) | doxygen -
+  }
+
+  actions doxygen-windows
+  {
+    echo "Generating doxygen documentation on Windows platform is not currently supported..."
+  }
+
+
+##############################################################################
+#                                  INSTALL                                   #
+##############################################################################
+
+  explicit install ;
+
+  alias install
+    : #sources
+        /lib/errhdl//install
+        /lib/meta//install
+        /lib/process//install
+        /lib/utility//install
+    : #requirements
+    : #default-build
+    : #usage-requirements
+  ;
+
+  explicit stage ;
+
+  alias stage
+    : #sources
+        /lib/errhdl//stage
+        /lib/meta//stage
+        /lib/process//stage
+        /lib/utility//stage
+    : #requirements
+    : #default-build
+    : #usage-requirements
+  ;
+
+
+}
+
+
+##############################################################################
+##############################################################################
+####                                                                      ####
+####                                 MAIN                                 ####
+####                                                                      ####
+##############################################################################
+##############################################################################
+
+if "--configure" in [ modules.peek : ARGV ] {
+  configure ;
+}
+else {
+  build ;
+}
+
+
+# vim: set ts=2 sw=2 et:
+
+

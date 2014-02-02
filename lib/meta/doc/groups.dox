@@ -1,0 +1,14 @@
+/// \defgroup sheratan_meta Metaprogramming library
+/// \ingroup sheratan
+///
+/// Template metaprogramming library.
+
+/// \defgroup sheratan_meta_test Metaprogramming unit-tests.
+/// \ingroup sheratan_meta
+///
+/// Metaprogramming unit-tests.
+
+
+// vim: set ts=2 sw=2 et:
+
+

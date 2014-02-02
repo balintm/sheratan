@@ -1,0 +1,274 @@
+/// \defgroup std STD
+/// \ingroup external_libs
+///
+/// Standard C++ Library.
+
+/// \namespace std
+/// \brief STD namespace.
+/// \ingroup std
+
+/// \class std::auto_ptr
+/// \brief Automatic Pointer [deprecated by C++11].
+/// \par Header file(s):
+/// <code>memory</code>
+/// \see http://www.cplusplus.com/reference/memory/auto_ptr/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::bad_alloc
+/// \brief Exception thrown on failure allocating memory.
+/// \par Header file(s):
+/// <code>new</code>
+/// \see http://www.cplusplus.com/reference/new/bad_alloc/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::basic_ostream
+/// \brief Output stream.
+/// \par Header file(s):
+/// <code>iostream</code>
+/// \see http://www.cplusplus.com/reference/ostream/basic_ostream/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::cerr
+/// \brief Standard output stream for errors.
+/// \par Header file(s):
+/// <code>iostream</code>
+/// \see http://www.cplusplus.com/reference/iostream/cerr/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::endl
+/// \brief Insert newline and flush.
+/// \par Header file(s):
+/// <code>ostream</code>
+/// \see http://www.cplusplus.com/reference/iostream/manipulators/endl/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::FILE
+/// \brief Object containing information to control a stream.
+/// \par Header file(s):
+/// <code>cstdio</code>
+/// \see http://www.cplusplus.com/reference/cstdio/FILE/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::iterator
+/// \brief Base class template that can be used to derive iterator classes from it.
+/// \par Header file(s):
+/// <code>iterator</code>
+/// \see http://www.cplusplus.com/reference/std/iterator/iterator/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::less
+/// \brief Function object class for less-than inequality comparison.
+/// \par Header file(s):
+/// <code>iterator</code>
+/// \see http://www.cplusplus.com/reference/std/functional/less/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::logic_error
+/// \brief Logic error exception.
+/// \par Header file(s):
+/// <code>stdexcept</code>
+/// \see http://www.cplusplus.com/reference/stdexcept/logic_error/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::ostream
+/// \brief Output stream.
+/// \par Header file(s):
+/// <code>ostream</code>
+/// <code>iostream</code>
+/// \see http://www.cplusplus.com/reference/ostream/ostream/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::ostringstream
+/// \brief Output string stream.
+/// \par Header file(s):
+/// <code>sstream</code>
+/// \see http://www.cplusplus.com/reference/sstream/ostringstream/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::pair
+/// \brief Pair of values.
+/// \par Header file(s):
+/// <code>utility</code>
+/// \see http://www.cplusplus.com/reference/utility/pair/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::ptrdiff_t
+/// \brief Result of pointer subtraction.
+/// \par Header file(s):
+/// <code>cstddef</code>
+/// \see http://www.cplusplus.com/reference/cstddef/ptrdiff_t/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::runtime_error
+/// \brief Runtime error exception.
+/// \par Header file(s):
+/// <code>stdexcept</code>
+/// \see http://www.cplusplus.com/reference/stdexcept/runtime_error/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::string
+/// \brief String.
+/// \par Header file(s):
+/// <code>string</code>
+/// \see http://www.cplusplus.com/reference/string/string/
+/// \ingroup std
+/// \nosubgrouping
+
+/// \class std::vector
+/// \brief Vector.
+/// \par Header file(s):
+/// <code>vector</code>
+/// \see http://www.cplusplus.com/reference/vector/vector/
+/// \ingroup std
+/// \nosubgrouping
+
+
+namespace std {
+
+
+/// \brief Close file.
+/// \param stream
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>cstdio</code>
+/// \see http://www.cplusplus.com/reference/clibrary/cstdio/fclose/
+/// \ingroup std
+/// \nosubgrouping
+int fclose(FILE *stream);
+
+/// \brief Flush stream.
+/// \param stream
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>cstdio</code>
+/// \see http://www.cplusplus.com/reference/clibrary/cstdio/fflush/
+/// \ingroup std
+/// \nosubgrouping
+int fflush(FILE *stream);
+
+/// \brief Get character from stream.
+/// \param stream
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>cstdio</code>
+/// \see http://www.cplusplus.com/reference/clibrary/cstdio/fgetc/
+/// \ingroup std
+/// \nosubgrouping
+int fgetc(FILE *stream);
+
+/// \brief Find value in range.
+/// \param first
+/// \param last
+/// \param value
+/// \return <code>InputIterator</code>
+/// \par Header file(s):
+/// <code>algorithm</code>
+/// \see http://www.cplusplus.com/reference/clibrary/cstdio/fgetc/
+/// \ingroup std
+/// \nosubgrouping
+template <class InputIterator, class T>
+InputIterator find (InputIterator first, InputIterator last, const T& value);
+
+/// \brief Write formatted output to stream.
+/// \param stream
+/// \param format
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>cstdio</code>
+/// \see http://www.cplusplus.com/reference/clibrary/cstdio/fprintf/
+/// \ingroup std
+/// \nosubgrouping
+int fprintf(FILE *stream, const char *format, ...);
+
+/// \brief Write formatted output to stream.
+/// \param stream
+/// \param format
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>cstdio</code>
+/// \see http://www.cplusplus.com/reference/clibrary/cstdio/fprintf/
+/// \ingroup std
+/// \nosubgrouping
+int fprintf(FILE *stream, const char *format, ...);
+
+/// \brief Write character to stream.
+/// \param character
+/// \param stream
+/// \return <code>int</code>
+/// \par Header file(s):
+/// <code>cstdio</code>
+/// \see http://www.cplusplus.com/reference/clibrary/cstdio/fputc/
+/// \ingroup std
+/// \nosubgrouping
+int fputc(int character, FILE *stream);
+
+/// \brief Read block of data from stream.
+/// \param ptr
+/// \param size
+/// \param count
+/// \param stream
+/// \return <code>size_t</code>
+/// \par Header file(s):
+/// <code>cstdio</code>
+/// \see http://www.cplusplus.com/reference/clibrary/cstdio/fread/
+/// \ingroup std
+/// \nosubgrouping
+size_t fread(void *ptr, size_t size, size_t count, FILE *stream);
+
+/// \brief Write block of data to stream.
+/// \param ptr
+/// \param size
+/// \param count
+/// \param stream
+/// \return <code>size_t</code>
+/// \par Header file(s):
+/// <code>cstdio</code>
+/// \see http://www.cplusplus.com/reference/clibrary/cstdio/fwrite/
+/// \ingroup std
+/// \nosubgrouping
+size_t fwrite(void *ptr, size_t size, size_t count, FILE *stream);
+
+/// \brief Write block of data to stream.
+/// \param ptr
+/// \param value
+/// \param num
+/// \return <code>void*</code>
+/// \par Header file(s):
+/// <code>cstring</code>
+/// \see http://www.cplusplus.com/reference/clibrary/cstring/memset/
+/// \ingroup std
+/// \nosubgrouping
+void * memset(void *ptr, int value, size_t num);
+
+/// \brief Exchange values of two objects.
+/// \param a
+/// \param b
+/// \par Header file(s):
+/// <code>algorithm</code>
+/// \see http://www.cplusplus.com/reference/algorithm/swap/
+/// \ingroup std
+/// \nosubgrouping
+template <class T>
+void swap(T& a, T& b);
+
+
+} // std
+
+
+// vim: set ts=2 sw=2 et:
+
+

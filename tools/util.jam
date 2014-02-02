@@ -1,0 +1,22 @@
+## \file tools/util.jam
+## \brief Build system utilities.
+## \ingroup tools
+## \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+# substitute a value when empty value is encountered
+rule nvl ( value ? : default )
+{
+  local result = $(value) ;
+
+  if ! $(value) {
+    result = $(default) ;
+  }
+
+  return $(result) ;
+}
+
+
+# vim: set ts=2 sw=2 et:
+
+

@@ -1,0 +1,44 @@
+/// \file sheratan/errhdl/error_category_template.ci
+/// \brief Error category template implementation.
+/// \ingroup sheratan_errhdl
+/// \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+namespace sheratan {
+
+namespace errhdl {
+
+
+template<typename ErrorCategoryTraits>
+error_category_template<ErrorCategoryTraits>::error_category_template()
+{
+}
+
+template<typename ErrorCategoryTraits>
+const char * error_category_template<ErrorCategoryTraits>::get_name() const
+{
+  return ErrorCategoryTraits::name();
+}
+
+template<typename ErrorCategoryTraits>
+error_category::errnum_type error_category_template<ErrorCategoryTraits>::get_default_errnum() const
+{
+  return ErrorCategoryTraits::default_errnum;
+}
+
+template<typename ErrorCategoryTraitsT>
+const error_category_template<ErrorCategoryTraitsT> & get_error_category()
+{
+  static const error_category_template<ErrorCategoryTraitsT> category;
+  return category;
+}
+
+
+} // namespace errhdl
+
+} // namespace sheratan
+
+
+// vim: set ts=2 sw=2 et:
+
+

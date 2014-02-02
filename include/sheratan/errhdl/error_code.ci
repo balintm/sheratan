@@ -1,0 +1,34 @@
+/// \file sheratan/errhdl/error_code.ci
+/// \brief Error code implementation.
+/// \ingroup sheratan_errhdl
+/// \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+namespace sheratan {
+
+namespace errhdl {
+
+
+template<typename ErrorCategory>
+error_code::error_code(typename ErrorCategory::errnum_type errnum, const ErrorCategory &category)
+: errnum_(errnum)
+, category_(&category)
+{
+}
+
+template<typename ErrorCategory>
+void error_code::set_error_code(typename ErrorCategory::errnum_type errnum, const ErrorCategory &category)
+{
+  this->errnum_ = errnum;
+  this->category_ = &category;
+}
+
+
+} // namespace errhdl
+
+} // namespace sheratan
+
+
+// vim: set ts=2 sw=2 et:
+
+

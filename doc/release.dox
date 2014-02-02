@@ -1,0 +1,52 @@
+/// \page project_release Release notes
+/// \section v0_0_1 0.0.1
+/// \subsection v0_0_1-20120924 (24.09.2012)
+/// - \b Added: <em>Build process</em>: Autotools-like build process with \c configure, \c build and \c stage steps.
+/// \subsection v0_0_1-20120820 (20.08.2012)
+/// - \b Added: <em>Process management library</em>: POSIX process ID.
+/// - \b Added: <em>Process management library</em>: POSIX process.
+/// - \b Added: <em>Process management library</em>: POSIX daemon.
+/// - \b Added: <em>Process management library</em>: POSIX parent-child synchronizer.
+/// - \b Updated: <em>Documentation</em>: Updated configuration for Doxygen ver. 1.8.1.
+/// \subsection v0_0_1-20111204 (04.12.2011)
+/// - \b Added: <em>Process management library</em>: Project structure created.
+/// \subsection v0_0_1-20110410 (10.04.2011)
+/// - \b Added: <em>Error handling library</em>: Library information constants.
+/// - \b Added: <em>Metaprogramming library</em>: Library information constants.
+/// - \b Added: <em>Utility library</em>: Library information constants.
+/// \subsection v0_0_1-20110408 (08.04.2011)
+/// - \b Added: <em>Utility library</em>: ID.
+/// \subsection v0_0_1-20110401 (01.04.2011)
+/// - \b Added: <em>Error handling library</em>: Implicit conversion from non-const to const exception trace iterator.
+/// - \b Updated: <em>Documentation</em>: Updated configuration for Doxygen ver. 1.7.3.
+/// \subsection v0_0_1-20110306 (06.03.2011)
+/// - \b Added: <em>Build process</em>: Building of both static and shared libraries by default.
+/// \subsection v0_0_1-20110302 (02.03.2011)
+/// - \b Added: <em>Tools</em>: Build system generated targets versioning.
+/// - \b Added: <em>Build process</em>: Versioned names for shared libraries.
+/// \subsection v0_0_1-20110301 (01.03.2011)
+/// - \b Added: <em>Tools</em>: Build system NVL rule.
+/// - \b Added: <em>Build process</em>: Configurable installation paths.
+/// \subsection v0_0_1-20101031 (31.10.2010)
+/// - \b Added: <em>Utility library</em>: Project structure created.
+/// - \b Added: <em>Utility library</em>: Explicit value.
+/// \subsection v0_0_1-20100717 (17.07.2010)
+/// - \b Added: <em>Sheratan</em>: Project structure created.
+/// - \b Added: <em>Metaprogramming library</em>: Project structure created.
+/// - \b Added: <em>Metaprogramming library</em>: If-then-else template.
+/// - \b Added: <em>Error handling library</em>: Project structure created.
+/// - \b Added: <em>Error handling library</em>: Error code.
+/// - \b Added: <em>Error handling library</em>: Error category.
+/// - \b Added: <em>Error handling library</em>: Default error category.
+/// - \b Added: <em>Error handling library</em>: Error information.
+/// - \b Added: <em>Error handling library</em>: Base exception.
+/// - \b Added: <em>Error handling library</em>: Runtime error exception.
+/// - \b Added: <em>Error handling library</em>: Logic error exception.
+/// - \b Added: <em>Error handling library</em>: Throwing macros.
+/// - \b Added: <em>Error handling library</em>: Failed assertion error category.
+/// - \b Added: <em>Error handling library</em>: Assertion macros.
+
+
+// vim: set ts=2 sw=2 et:
+
+

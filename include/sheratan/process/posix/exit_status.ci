@@ -1,0 +1,33 @@
+/// \file sheratan/process/posix/exit_status.ci
+/// \brief POSIX process exit status implementation.
+/// \ingroup sheratan_process_posix
+/// \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+#include <iostream>
+
+
+namespace sheratan {
+
+namespace process_impl {
+
+namespace posix {
+
+
+template<typename CharT, typename CharTraits>
+std::basic_ostream<CharT, CharTraits> & operator<<(std::basic_ostream<CharT, CharTraits> &os, const exit_status &value)
+{
+  return os << value.get_value();
+}
+
+
+} // namespace posix
+
+} // namespace process_impl
+
+} // namespace sheratan
+
+
+// vim: set ts=2 sw=2 et:
+
+

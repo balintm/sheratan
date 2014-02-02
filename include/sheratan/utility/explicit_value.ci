@@ -1,0 +1,50 @@
+/// \file sheratan/utility/explicit_value.ci
+/// \brief Explicit value implementation.
+/// \ingroup sheratan_utility
+/// \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+namespace sheratan {
+
+namespace utility {
+
+
+template<typename ValueTraits, typename ValueTraits::tag::value_type Tag>
+explicit_value<ValueTraits, Tag>::explicit_value()
+: value_(ValueTraits::default_value())
+{
+}
+
+template<typename ValueTraits, typename ValueTraits::tag::value_type Tag>
+explicit_value<ValueTraits, Tag>::explicit_value(const explicit_value<ValueTraits, Tag>::value_type &value)
+: value_(value)
+{
+}
+
+template<typename ValueTraits, typename ValueTraits::tag::value_type Tag>
+explicit_value<ValueTraits, Tag>::operator typename explicit_value<ValueTraits, Tag>::value_type() const
+{
+  return this->get_value();
+}
+
+template<typename ValueTraits, typename ValueTraits::tag::value_type Tag>
+typename explicit_value<ValueTraits, Tag>::value_type explicit_value<ValueTraits, Tag>::get_value() const
+{
+  return this->value_;
+}
+
+template<typename ValueTraits, typename ValueTraits::tag::value_type Tag>
+void explicit_value<ValueTraits, Tag>::set_value(const explicit_value<ValueTraits, Tag>::value_type &value)
+{
+  this->value_ = value;
+}
+
+
+} // namespace utility
+
+} // namespace sheratan
+
+
+// vim: set ts=2 sw=2 et:
+
+

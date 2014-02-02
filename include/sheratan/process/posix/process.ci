@@ -1,0 +1,38 @@
+/// \file sheratan/process/posix/process.ci
+/// \brief POSIX process implementation.
+/// \ingroup sheratan_process_posix
+/// \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+#include "sheratan/errhdl/assert.hpp"
+
+
+namespace sheratan {
+
+namespace process_impl {
+
+namespace posix {
+
+
+# if 0 // NOT IMPLEMENTED
+template<typename DurationT>
+exit_status process::timed_join(const DurationT &time)
+{
+  SHERATAN_CHECK(this->valid());
+
+  /// \todo Implement this method.
+  return exit_status();
+}
+# endif // NOT IMPLEMENTED
+
+
+} // namespace posix
+
+} // namespace process_impl
+
+} // namespace sheratan
+
+
+// vim: set ts=2 sw=2 et:
+
+

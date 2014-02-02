@@ -1,0 +1,102 @@
+## \file process/Jamfile
+## \brief Sheratan process management library project description file
+## \ingroup sheratan_process
+## \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+##############################################################################
+#                                  PROJECT                                   #
+##############################################################################
+
+constant LIB_NAME        : process                ;
+constant PARENT_NAME     : $(LIB_NAME)            ;
+
+project
+  : requirements
+      <dependency>Jamfile
+  : default-build
+  : usage-requirements
+      <include>$(PROJECT_PATH_INCLUDE)
+;
+
+use-project /lib/$(LIB_NAME)/posix : ./$(PROJECT_DIR_SUB)/posix ;
+
+alias all
+  : #sources
+      $(PROJECT_LCNAME)_$(LIB_NAME).lib
+      $(PROJECT_LCNAME)_$(LIB_NAME).test
+  : #requirements
+  : #default-build
+  : #usage-requirements
+;
+
+
+##############################################################################
+#                                   BUILD                                    #
+##############################################################################
+
+explicit $(PROJECT_LCNAME)_$(LIB_NAME).lib ;
+
+alias $(PROJECT_LCNAME)_$(LIB_NAME).lib
+  : #sources
+  : #requirements
+      ## \todo Add POSIX implementation into sources for other POSIX operating
+      ##       systems, at least FreeBSD and Solaris.
+      <target-os>linux:<source>/lib/$(LIB_NAME)/posix//$(PROJECT_LCNAME)_$(LIB_NAME)_posix.lib
+  : #default-build
+  : #usage-requirements
+;
+
+
+##############################################################################
+#                                    TEST                                    #
+##############################################################################
+
+explicit $(PROJECT_LCNAME)_$(LIB_NAME).test ;
+
+alias $(PROJECT_LCNAME)_$(LIB_NAME).test
+  : #sources
+  : #requirements
+      ## \todo Add POSIX implementation into sources for other POSIX operating
+      ##       systems, at least FreeBSD and Solaris.
+      <target-os>linux:<source>/lib/$(LIB_NAME)/posix//$(PROJECT_LCNAME)_$(LIB_NAME)_posix.test
+  : #default-build
+  : #usage-requirements
+;
+
+
+##############################################################################
+#                                  INSTALL                                   #
+##############################################################################
+
+explicit install install.include ;
+
+alias install : install.include install.sub ;
+
+alias install.sub : : <target-os>linux:<source>/lib/$(LIB_NAME)/posix//install ;
+
+install install.include
+  : #sources
+      [ glob $(PROJECT_PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)/*.hpp ]
+      [ glob $(PROJECT_PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)/*.ci ]
+  : #requirements
+      <location>$(PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)
+;
+
+explicit stage stage.include ;
+
+alias stage : stage.include stage.sub ;
+
+alias stage.sub : : <target-os>linux:<source>/lib/$(LIB_NAME)/posix//stage ;
+
+install stage.include
+  : #sources
+      [ glob $(PROJECT_PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)/*.hpp ]
+      [ glob $(PROJECT_PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)/*.ci ]
+  : #requirements
+      <location>$(PROJECT_PATH_STAGE)/$(PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)
+;
+
+# vim: set ts=2 sw=2 et:
+
+

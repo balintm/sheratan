@@ -1,0 +1,155 @@
+## \file errhdl/Jamfile
+## \brief Error handling library project description file.
+## \ingroup sheratan_errhdl
+## \author Marek Balint \c (mareq[A]balint[D]eu)
+
+
+##############################################################################
+#                                  PROJECT                                   #
+##############################################################################
+
+constant LIB_NAME        : errhdl                 ;
+constant LIB_VERSION     : $(PROJECT_VERSION)     ;
+constant LIB_VERSION_TAG : $(PROJECT_VERSION_TAG) ;
+
+project
+  : requirements
+      <define>$(DEFINE_PREFIX)LIB_NAME="\"\\\"$(PROJECT_LCNAME)_$(LIB_NAME)\\\"\""
+      <define>$(DEFINE_PREFIX)LIB_VERSION="\"\\\"$(LIB_VERSION)\\\"\""
+      <define>$(DEFINE_PREFIX)LIB_VERSION_TAG=$(LIB_VERSION_TAG)
+      <dependency>Jamfile
+  : default-build
+  : usage-requirements
+      <include>$(PROJECT_PATH_INCLUDE)
+;
+
+alias all
+  : #sources
+      $(PROJECT_LCNAME)_$(LIB_NAME).lib
+      $(PROJECT_LCNAME)_$(LIB_NAME).test
+  : #requirements
+  : #default-build
+  : #usage-requirements
+;
+
+
+##############################################################################
+#                                   BUILD                                    #
+##############################################################################
+
+import tools/version-tag ;
+
+explicit $(PROJECT_LCNAME)_$(LIB_NAME).lib ;
+
+lib $(PROJECT_LCNAME)_$(LIB_NAME).lib
+  : #sources
+      [ glob $(PROJECT_DIR_SRC)/*.cpp ]
+  : #requirements
+      <version-tag>$(LIB_VERSION)
+      <tag>@tools/version-tag.version-tag
+  : #default-build
+  : #usage-requirements
+;
+
+
+##############################################################################
+#                                    TEST                                    #
+##############################################################################
+
+constant LIB_TEST_REQUIREMENTS :
+  <library>$(PROJECT_LCNAME)_$(LIB_NAME).lib
+;
+
+explicit $(PROJECT_LCNAME)_$(LIB_NAME).test ;
+
+alias $(PROJECT_LCNAME)_$(LIB_NAME).test
+  : #sources
+      [ run
+        # sources
+            [ glob $(PROJECT_DIR_TEST)/*.cpp ]
+        : #args
+            $(TEST_ARGS)
+        : #input-files
+        : #requirements
+            $(TEST_REQUIREMENTS) $(LIB_TEST_REQUIREMENTS)
+        : #target-name
+            $(PROJECT_LCNAME)_$(LIB_NAME)
+        : #default-build
+      ]
+  : #requirements
+  : #default-build
+  : #usage-requirements
+;
+
+
+##############################################################################
+#                                  INSTALL                                   #
+##############################################################################
+
+explicit install install.include install.$(PROJECT_LCNAME)_$(LIB_NAME).lib.shared install.$(PROJECT_LCNAME)_$(LIB_NAME).lib.static ;
+
+alias install : install.include install.$(PROJECT_LCNAME)_$(LIB_NAME).lib.shared install.$(PROJECT_LCNAME)_$(LIB_NAME).lib.static ;
+
+install install.include
+  : #sources
+      [ glob $(PROJECT_PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)/*.hpp ]
+      [ glob $(PROJECT_PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)/*.ci ]
+  : #requirements
+      <location>$(PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)
+;
+
+install install.$(PROJECT_LCNAME)_$(LIB_NAME).lib.shared
+  : #sources
+      $(PROJECT_LCNAME)_$(LIB_NAME).lib
+  : #requirements
+      <link>shared
+      <install-dependencies>off
+      <install-type>LIB
+      <location>$(PATH_LIB)
+;
+
+install install.$(PROJECT_LCNAME)_$(LIB_NAME).lib.static
+  : #sources
+      $(PROJECT_LCNAME)_$(LIB_NAME).lib
+  : #requirements
+      <link>static
+      <install-dependencies>off
+      <install-type>LIB
+      <location>$(PATH_LIB)
+;
+
+explicit stage stage.include stage.$(PROJECT_LCNAME)_$(LIB_NAME).lib.shared stage.$(PROJECT_LCNAME)_$(LIB_NAME).lib.static ;
+
+alias stage : stage.include stage.$(PROJECT_LCNAME)_$(LIB_NAME).lib.shared stage.$(PROJECT_LCNAME)_$(LIB_NAME).lib.static ;
+
+install stage.include
+  : #sources
+      [ glob $(PROJECT_PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)/*.hpp ]
+      [ glob $(PROJECT_PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)/*.ci ]
+  : #requirements
+      <location>$(PROJECT_PATH_STAGE)/$(PATH_INCLUDE)/$(PROJECT_LCNAME)/$(LIB_NAME)
+;
+
+install stage.$(PROJECT_LCNAME)_$(LIB_NAME).lib.shared
+  : #sources
+      $(PROJECT_LCNAME)_$(LIB_NAME).lib
+  : #requirements
+      <link>shared
+      <install-dependencies>off
+      <install-type>LIB
+      <location>$(PROJECT_PATH_STAGE)/$(PATH_LIB)
+;
+
+install stage.$(PROJECT_LCNAME)_$(LIB_NAME).lib.static
+  : #sources
+      $(PROJECT_LCNAME)_$(LIB_NAME).lib
+  : #requirements
+      <link>static
+      <install-dependencies>off
+      <install-type>LIB
+      <location>$(PROJECT_PATH_STAGE)/$(PATH_LIB)
+;
+
+# vim: set ts=2 sw=2 et:
+
+
